@@ -4,7 +4,7 @@ import './ExpenseForm.css';
 
 const ExpenseForm = (props) => {
     // could have individual useStates for each property
-    const defaultState = { title: '', amount: '', date: '' };
+    const defaultState = { title: '', amount: '', date: ''};
     const [formState, setFormState] = useState(defaultState);
 
     const titleChangeHandler = (event) => {
@@ -20,13 +20,13 @@ const ExpenseForm = (props) => {
     }
     const dateChangeHandler = (event) => {
         setFormState((previousState) => {
-            return { ...previousState, date: event.target.value }
+            return { ...previousState, date: event.target.value}
         });
     }
 
     const submitHandler = (e) => {
         e.preventDefault();
-        props.onSaveExpense({ ...formState })
+        props.onSaveExpense({ ...formState, date: new Date(formState.date), amount: +formState.amount })
         setFormState(defaultState);
     }
 
@@ -46,6 +46,7 @@ const ExpenseForm = (props) => {
             </div>
         </div>
         <div className='new-expense__actions'>
+            <button type='button' onClick={props.onCancel}>Cancel</button>
             <button type='submit'>Add Expense</button>
         </div>
     </form>
